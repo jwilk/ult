@@ -22,7 +22,7 @@ def main():
     ap.add_argument('name', metavar='NAME', nargs='+')
     options = ap.parse_args()
     name = ' '.join(options.name).upper()
-    match = re.match(r'\AU[+]([0-9A-F]{4,6})\Z', name)
+    match = re.match(r'\AU[+]([0-9A-F]+)\Z', name)
     if match is None:
         try:
             ch = unicodedata.lookup(name)
