@@ -45,7 +45,7 @@ def main():
         glyph = None
     elif cat[0] == 'M':
         glyph = '\N{DOTTED CIRCLE}' + ch
-    print(f'U+{pt:04X} {name or ""}')
+    print(f'U+{pt:04X}{name and " "}{name or ""}')
     if glyph:
         print(f'Text: {glyph}')
     print(f'Category: {cat}')
