@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: MIT
 
 import argparse
+import gzip
 import re
 import sys
 import unicodedata
@@ -16,6 +17,26 @@ prog = argparse.ArgumentParser().prog
 def error(msg):
     print(f'{prog}: {msg}', file=sys.stderr)
     sys.exit(1)
+
+def get_mnemonics():
+    seen = set()
+    data = {}
+    with gzip.open('/usr/share/doc/RFC/links/rfc1345.txt.gz', 'rt', encoding='ASCII') as file:
+        for line in file:
+            match = re.match('^ (\S+) +([0-9a-f]{4}) +[A-Z]', line)
+            if match:
+                (s, pt) = match.groups()
+                pt = int(pt, 16)
+                ch = chr(pt)
+                if ch in {'\N{LATIN SMALL LETTER N WITH CIRCUMFLEX BELOW}', '\N{LATIN SMALL LETTER S WITH DOT BELOW AND DOT ABOVE}'}:
+                    # https://www.rfc-editor.org/errata/eid2683
+                    assert s[0].upper()
+                    s = s[0].lower() + s[1:]
+                assert s not in seen, f'{s!r} already seen'
+                seen |= {s}
+                assert ch not in data, f'U+{pt:04X} already seen'
+                data[ch] = s
+    return data
 
 def main():
     ap = argparse.ArgumentParser()
@@ -52,6 +73,9 @@ def main():
     print(f'U+{pt:04X}{name and " "}{name or ""}')
     if glyph:
         print(f'Text: {glyph}')
+    mnemonic = get_mnemonics().get(ch)
+    if mnemonic:
+        print(f'RFC-1345: {mnemonic}')
     print(f'Category: {cat}')
     print()
 
