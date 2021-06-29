@@ -130,7 +130,7 @@ def main():
     if glyph:
         print(f'Text: {glyph}')
     mnemonic = get_mnemonics().get(ch)
-    if mnemonic:
+    if mnemonic and mnemonic != ch:
         print(f'RFC-1345: {mnemonic}')
     print(f'Category: {cat} ({long_cat})')
     nv = get_numeric_value(ch)
