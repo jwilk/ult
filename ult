@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: MIT
 
 import argparse
+import fractions
 import gzip
 import re
 import sys
@@ -71,6 +72,25 @@ categories = dict(
     Cn='Unassigned',
 )
 
+def float2frac(x):
+    fx = fractions.Fraction(x)
+    (n, d) = (fx.numerator, fx.denominator)
+    (p0, q0, p1, q1) = (0, 1, 1, 0)
+    while d != 0:
+        a = n // d
+        (p0, q0, p1, q1) = (p1, q1, p0 + a * p1, q0 + a * q1)
+        (n, d) = (d, n - a * d)
+        if p1 / q1 == x:
+            return fractions.Fraction(p1, q1)
+    raise ValueError
+
+def get_numeric_value(ch):
+    try:
+        nv = unicodedata.numeric(ch)
+    except ValueError:
+        return
+    return float2frac(nv)
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('name', metavar='NAME', nargs='+')
@@ -114,6 +134,9 @@ def main():
     if mnemonic:
         print(f'RFC-1345: {mnemonic}')
     print(f'Category: {cat} ({long_cat})')
+    nv = get_numeric_value(ch)
+    if nv is not None:
+        print(f'Numeric value: {nv}')
     print()
 
 if __name__ == '__main__':
