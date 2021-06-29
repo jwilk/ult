@@ -73,8 +73,7 @@ categories = dict(
 )
 
 def float2frac(x):
-    fx = fractions.Fraction(x)
-    (n, d) = (fx.numerator, fx.denominator)
+    (n, d) = x.as_integer_ratio()
     (p0, q0, p1, q1) = (0, 1, 1, 0)
     while d != 0:
         a = n // d
