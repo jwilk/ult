@@ -24,7 +24,8 @@ def error(msg):
 def get_mnemonics():
     seen = set()
     data = {}
-    with gzip.open('/usr/share/doc/RFC/links/rfc1345.txt.gz', 'rt', encoding='ASCII') as file:
+    path = '/usr/share/doc/RFC/links/rfc1345.txt.gz'
+    with gzip.open(path, 'rt', encoding='ASCII') as file:
         for line in file:
             match = re.match('^ (\S+) +([0-9a-f]{4}) +[A-Z]', line)
             if match:
