@@ -6,6 +6,7 @@
 
 import argparse
 import fractions
+import functools
 import gzip
 import re
 import sys
@@ -19,6 +20,7 @@ def error(msg):
     print(f'{prog}: {msg}', file=sys.stderr)
     sys.exit(1)
 
+@functools.lru_cache(maxsize=1)
 def get_mnemonics():
     seen = set()
     data = {}
