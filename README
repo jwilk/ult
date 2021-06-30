@@ -1,0 +1,22 @@
+.. code:: console
+
+   $ ult SECTION SIGN
+   U+00A7 SECTION SIGN
+   Text: §
+   RFC-1345: SE
+   X11 multi-key input sequences:
+     <Multi_key> <s> <o>
+     <Multi_key> <o> <s>
+     <Multi_key> <S> <O>
+     <Multi_key> <O> <S>
+     <Multi_key> <s> <exclam>
+     <Multi_key> <S> <exclam>
+     <Multi_key> <Cyrillic_pe> <Cyrillic_a>
+   Category: Po (Other_Punctuation)
+
+   $ ult U+2603
+   U+2603 SNOWMAN
+   Text: ☃
+   Category: So (Other_Symbol)
+
+.. vim:ft=rst ts=3 sts=3 sw=3 et
