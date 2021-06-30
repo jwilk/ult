@@ -136,10 +136,14 @@ def main():
         if cat == 'Cn':
             name = 'non-character'
         elif cat == 'Cc':
-            # TODO: elaborate
             name = 'control character'
+            if pt <= 0x1F:
+                name += ' (C0)'
+            elif 0x80 <= pt <= 0x9F:
+                name += ' (C1)'
         elif cat == 'Cs':
             name = 'lone surrogate'
+    # TODO: print aliases
     glyph = ch
     if cat[0] == 'C':
         glyph = None
