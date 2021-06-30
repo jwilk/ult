@@ -143,13 +143,13 @@ def main():
                 name += ' (C1)'
         elif cat == 'Cs':
             name = 'lone surrogate'
+    print(f'U+{pt:04X}{name and " "}{name or ""}')
     # TODO: print aliases
     glyph = ch
     if cat[0] == 'C':
         glyph = None
     elif cat[0] == 'M':
         glyph = '\N{DOTTED CIRCLE}' + ch
-    print(f'U+{pt:04X}{name and " "}{name or ""}')
     if glyph:
         print(f'Text: {glyph}')
     mnemonic = get_mnemonics().get(ch)
