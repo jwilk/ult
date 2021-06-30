@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: MIT
 
 import argparse
+import collections
 import fractions
 import functools
 import gzip
@@ -40,6 +41,21 @@ def get_mnemonics():
                 seen |= {s}
                 assert ch not in data, f'U+{pt:04X} already seen'
                 data[ch] = s
+    return data
+
+@functools.lru_cache(maxsize=1)
+def get_x11_seqs():
+    data = collections.defaultdict(list)
+    path = '/usr/share/X11/locale/en_US.UTF-8/Compose'
+    with open(path, 'rt', encoding='UTF-8') as file:
+        for line in file:
+            if line[:1] == '#':
+                continue
+            match = re.match(r'(\S.*):\s*"(.*)"', line)
+            (seq, ch) = match.groups()
+            if len(ch) != 1:
+                continue
+            data[ch] += [seq.rstrip()]
     return data
 
 categories = dict(
@@ -135,6 +151,11 @@ def main():
     mnemonic = get_mnemonics().get(ch)
     if mnemonic and mnemonic != ch:
         print(f'RFC-1345: {mnemonic}')
+    x11_seqs = get_x11_seqs().get(ch)
+    if x11_seqs:
+        print('X11 multi-key input sequences:')
+        for x11_seq in x11_seqs:
+            print(' ', x11_seq)
     print(f'Category: {cat} ({long_cat})')
     nv = get_numeric_value(ch)
     if nv is not None:
