@@ -13,6 +13,7 @@
      <Multi_key> <S> <exclam>
      <Multi_key> <Cyrillic_pe> <Cyrillic_a>
    Category: Po (Other_Punctuation)
+   Block: U+0080..U+00FF C1 Controls and Latin-1 Supplement (Latin-1 Supplement)
 
    $ ult BACKSPACE
    U+0008 control character (C0)
@@ -21,10 +22,12 @@
      BS (abbreviation)
    RFC-1345: BS
    Category: Cc (Control)
+   Block: U+0000..U+007F C0 Controls and Basic Latin (Basic Latin)
 
    $ ult U+2603
    U+2603 SNOWMAN
    Text: ☃
    Category: So (Other_Symbol)
+   Block: U+2600..U+26FF Miscellaneous Symbols
 
 .. vim:ft=rst ts=3 sts=3 sw=3 et

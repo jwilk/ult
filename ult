@@ -6,6 +6,7 @@
 
 import argparse
 import collections
+import ctypes
 import fractions
 import functools
 import gzip
@@ -88,6 +89,43 @@ def _get_alias_data():
 
 def get_aliases(ch):
     return _get_alias_data().get(ch)
+
+_libunl = ctypes.CDLL('libuninameslist.so.1')
+
+# int uniNamesList_blockNumber(unsigned long uni);
+_libunl_block_no = _libunl.uniNamesList_blockNumber
+_libunl_block_no.argtypes = [ctypes.c_long]
+_libunl_block_no.restype = ctypes.c_int
+
+# long uniNamesList_blockStart(int uniBlock);
+_libunl_block_start = _libunl.uniNamesList_blockStart
+_libunl_block_start.argtypes = [ctypes.c_int]
+_libunl_block_start.restype = ctypes.c_long
+
+# long uniNamesList_blockEnd(int uniBlock);
+_libunl_block_end = _libunl.uniNamesList_blockEnd
+_libunl_block_end.argtypes = [ctypes.c_int]
+_libunl_block_end.restype = ctypes.c_long
+
+# const char *uniNamesList_blockName(int uniBlock);
+_libunl_block_name = _libunl.uniNamesList_blockName
+_libunl_block_name.argtypes = [ctypes.c_int]
+_libunl_block_name.restype = ctypes.c_char_p
+
+class Block(typing.NamedTuple):
+	start: int
+	stop: int
+	name: str
+
+def get_block(ch):
+    pt = ord(ch)
+    i = _libunl_block_no(pt)
+    if i < 0:
+        return None
+    start = _libunl_block_start(i)
+    stop = _libunl_block_end(i)
+    name = _libunl_block_name(i).decode('UTF-8')
+    return Block(start, stop, name)
 
 categories = dict(
     Lu='Uppercase_Letter',
@@ -198,6 +236,9 @@ def main():
         for x11_seq in x11_seqs:
             print(' ', x11_seq)
     print(f'Category: {cat} ({long_cat})')
+    block = get_block(ch)
+    if block:
+        print(f'Block: U+{block.start:04X}..U+{block.stop:04X} {block.name}')
     nv = get_numeric_value(ch)
     if nv is not None:
         print(f'Numeric value: {nv}')
