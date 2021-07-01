@@ -185,6 +185,8 @@ def main():
         glyph = None
     elif cat[0] == 'M':
         glyph = '\N{DOTTED CIRCLE}' + ch
+    elif cat == 'Zs':
+        glyph = f'[{glyph}]'
     if glyph:
         print(f'Text: {glyph}')
     mnemonic = get_mnemonic(ch)
