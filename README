@@ -14,6 +14,14 @@
      <Multi_key> <Cyrillic_pe> <Cyrillic_a>
    Category: Po (Other_Punctuation)
 
+   $ ult BACKSPACE
+   U+0008 control character (C0)
+   Aliases:
+     BACKSPACE (control)
+     BS (abbreviation)
+   RFC-1345: BS
+   Category: Cc (Control)
+
    $ ult U+2603
    U+2603 SNOWMAN
    Text: ☃
