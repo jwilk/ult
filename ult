@@ -21,7 +21,10 @@ def error(msg):
     print(f'{prog}: {msg}', file=sys.stderr)
     sys.exit(1)
 
-@functools.lru_cache(maxsize=1)
+def cache(f):
+    return functools.lru_cache(maxsize=1)(f)
+
+@cache
 def get_mnemonics():
     seen = set()
     data = {}
@@ -43,7 +46,7 @@ def get_mnemonics():
                 data[ch] = s
     return data
 
-@functools.lru_cache(maxsize=1)
+@cache
 def get_x11_seqs():
     data = collections.defaultdict(list)
     path = '/usr/share/X11/locale/en_US.UTF-8/Compose'
