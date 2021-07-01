@@ -32,7 +32,7 @@ def _get_mnemonic_data():
     path = '/usr/share/doc/RFC/links/rfc1345.txt.gz'
     with gzip.open(path, 'rt', encoding='ASCII') as file:
         for line in file:
-            match = re.match('^ (\S+) +([0-9a-f]{4}) +[A-Z]', line)
+            match = re.match(r'^ (\S+) +([0-9a-f]{4}) +[A-Z]', line)
             if match:
                 (s, pt) = match.groups()
                 pt = int(pt, 16)
