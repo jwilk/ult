@@ -26,7 +26,7 @@ def cache(f):
     return functools.lru_cache(maxsize=1)(f)
 
 @cache
-def get_mnemonics():
+def _get_mnemonic_data():
     seen = set()
     data = {}
     path = '/usr/share/doc/RFC/links/rfc1345.txt.gz'
@@ -47,8 +47,11 @@ def get_mnemonics():
                 data[ch] = s
     return data
 
+def get_mnemonic(ch):
+    return _get_mnemonic_data().get(ch)
+
 @cache
-def get_x11_seqs():
+def _get_x11_seq_data():
     data = collections.defaultdict(list)
     path = '/usr/share/X11/locale/en_US.UTF-8/Compose'
     with open(path, 'rt', encoding='UTF-8') as file:
@@ -62,12 +65,15 @@ def get_x11_seqs():
             data[ch] += [seq.rstrip()]
     return data
 
+def get_x11_seqs(ch):
+    return _get_x11_seq_data().get(ch)
+
 class Alias(typing.NamedTuple):
     name: str
     label: str
 
 @cache
-def get_aliases():
+def _get_alias_data():
     data = collections.defaultdict(list)
     path = '/usr/share/unicode/NameAliases.txt'
     with open(path, 'rt', encoding='UTF-8') as file:
@@ -79,6 +85,9 @@ def get_aliases():
             ch = chr(int(pt, 16))
             data[ch] += [Alias(name, label)]
     return data
+
+def get_aliases(ch):
+    return _get_alias_data().get(ch)
 
 categories = dict(
     Lu='Uppercase_Letter',
@@ -166,7 +175,7 @@ def main():
         elif cat == 'Cs':
             name = 'lone surrogate'
     print(f'U+{pt:04X}{name and " "}{name or ""}')
-    aliases = get_aliases()[ch]
+    aliases = get_aliases(ch)
     if aliases:
         print('Aliases:')
         for alias in aliases:
@@ -178,10 +187,10 @@ def main():
         glyph = '\N{DOTTED CIRCLE}' + ch
     if glyph:
         print(f'Text: {glyph}')
-    mnemonic = get_mnemonics().get(ch)
+    mnemonic = get_mnemonic(ch)
     if mnemonic and mnemonic != ch:
         print(f'RFC-1345: {mnemonic}')
-    x11_seqs = get_x11_seqs().get(ch)
+    x11_seqs = get_x11_seqs(ch)
     if x11_seqs:
         print('X11 multi-key input sequences:')
         for x11_seq in x11_seqs:
