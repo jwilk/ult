@@ -11,6 +11,7 @@ import functools
 import gzip
 import re
 import sys
+import typing
 import unicodedata
 
 0_0  # Python >= 3.6 is required
@@ -59,6 +60,24 @@ def get_x11_seqs():
             if len(ch) != 1:
                 continue
             data[ch] += [seq.rstrip()]
+    return data
+
+class Alias(typing.NamedTuple):
+    name: str
+    label: str
+
+@cache
+def get_aliases():
+    data = collections.defaultdict(list)
+    path = '/usr/share/unicode/NameAliases.txt'
+    with open(path, 'rt', encoding='UTF-8') as file:
+        for line in file:
+            line = line.rstrip('\n')
+            if line[:1] in {'#', ''}:
+                continue
+            (pt, name, label) = line.split(';')
+            ch = chr(int(pt, 16))
+            data[ch] += [Alias(name, label)]
     return data
 
 categories = dict(
@@ -147,7 +166,11 @@ def main():
         elif cat == 'Cs':
             name = 'lone surrogate'
     print(f'U+{pt:04X}{name and " "}{name or ""}')
-    # TODO: print aliases
+    aliases = get_aliases()[ch]
+    if aliases:
+        print('Aliases:')
+        for alias in aliases:
+            print(f'  {alias.name} ({alias.label})')
     glyph = ch
     if cat[0] == 'C':
         glyph = None
