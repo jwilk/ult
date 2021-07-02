@@ -51,6 +51,37 @@ def _get_mnemonic_data():
 def get_mnemonic(ch):
     return _get_mnemonic_data().get(ch)
 
+_x11_keys = dict(
+    space=' ',
+    exclam='!',
+    quotedbl='"',
+    numbersign='#',
+    percent='%',
+    apostrophe="'",
+    parenright=')',
+    parenleft='(',
+    asterisk='*',
+    plus='+',
+    comma=',',
+    minus='-',
+    period='.',
+    slash='/',
+    colon=':',
+    semicolon=';',
+    equal='=',
+    question='?',
+    bracketleft='[',
+    backslash='\\',
+    bracketright=']',
+    asciicircum='^',
+    underscore='_',
+    grave='`',
+    braceleft='{',
+    bar='|',
+    braceright='}',
+    asciitilde='~',
+)
+
 @cache
 def _get_x11_seq_data():
     data = collections.defaultdict(list)
@@ -63,7 +94,18 @@ def _get_x11_seq_data():
             (seq, ch) = match.groups()
             if len(ch) != 1:
                 continue
-            data[ch] += [seq.rstrip()]
+            seq = seq.rstrip()
+            def subst(match):
+                orig = match.group()
+                key = match.group(1)
+                if len(key) == 1:
+                    return key
+                try:
+                    return _x11_keys[key]
+                except KeyError:
+                    return orig
+            seq = re.sub(r'<(\w+)>', subst, seq)
+            data[ch] += [seq]
     return data
 
 def get_x11_seqs(ch):
