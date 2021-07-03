@@ -207,7 +207,7 @@ def get_numeric_value(ch):
     try:
         nv = unicodedata.numeric(ch)
     except ValueError:
-        return
+        return None
     return float2frac(nv)
 
 def main():
