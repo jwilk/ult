@@ -169,38 +169,23 @@ def get_block(ch):
     name = _libunl_block_name(i).decode('UTF-8')
     return Block(start, stop, name)
 
-categories = dict(
-    Lu='Uppercase_Letter',
-    Ll='Lowercase_Letter',
-    Lt='Titlecase_Letter',
-    Lm='Modifier_Letter',
-    Lo='Other_Letter',
-    Mn='Nonspacing_Mark',
-    Mc='Spacing_Mark',
-    Me='Enclosing_Mark',
-    Nd='Decimal_Number',
-    Nl='Letter_Number',
-    No='Other_Number',
-    Pc='Connector_Punctuation',
-    Pd='Dash_Punctuation',
-    Ps='Open_Punctuation',
-    Pe='Close_Punctuation',
-    Pi='Initial_Punctuation',
-    Pf='Final_Punctuation',
-    Po='Other_Punctuation',
-    Sm='Math_Symbol',
-    Sc='Currency_Symbol',
-    Sk='Modifier_Symbol',
-    So='Other_Symbol',
-    Zs='Space_Separator',
-    Zl='Line_Separator',
-    Zp='Paragraph_Separator',
-    Cc='Control',
-    Cf='Format',
-    Cs='Surrogate',
-    Co='Private_Use',
-    Cn='Unassigned',
-)
+@cache
+def _get_prop_alias_data():
+    data = collections.defaultdict(dict)
+    path = '/usr/share/unicode/PropertyValueAliases.txt'
+    with open(path, 'rt', encoding='UTF-8') as file:
+        for line in file:
+            line = line.partition('#')[0]
+            line = line.rstrip()
+            if not line:
+                continue
+            line = line.split(';')
+            (prop, k1, k2, *tail) = map(str.strip, line)
+            data[prop][k1] = k2
+    return data
+
+def get_category_alias(cat):
+    return _get_prop_alias_data()['gc'][cat]
 
 def float2frac(x):
     (n, d) = x.as_integer_ratio()
@@ -242,7 +227,7 @@ def main():
         ch = chr(pt)
     name = unicodedata.name(ch, '')
     cat = unicodedata.category(ch)
-    long_cat = categories[cat]
+    long_cat = get_category_alias(cat)
     if not name:
         if cat == 'Cn':
             name = 'non-character'
