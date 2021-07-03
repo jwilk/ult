@@ -181,6 +181,7 @@ def _get_prop_alias_data():
                 continue
             line = line.split(';')
             (prop, k1, k2, *tail) = map(str.strip, line)
+            del tail
             data[prop][k1] = k2
     return data
 
