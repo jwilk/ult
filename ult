@@ -15,7 +15,7 @@ import sys
 import typing
 import unicodedata
 
-0_0  # Python >= 3.6 is required
+type(0_0)  # Python >= 3.6 is required
 
 prog = argparse.ArgumentParser().prog
 
