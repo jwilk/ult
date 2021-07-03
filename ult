@@ -186,6 +186,7 @@ def _get_prop_alias_data():
             line = line.split(';')
             (prop, k1, k2, *tail) = map(str.strip, line)
             del tail
+            assert k1 not in data[prop], f'{prop}={k1} already seen'
             data[prop][k1] = k2
     return data
 
