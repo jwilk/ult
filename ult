@@ -222,8 +222,8 @@ def main():
         pt = ord(ch)
     else:
         pt = int(match.group(1), 16)
-        if pt > 0x10FFFF:
-            error(f'code point out of range: 0x{pt:04X} > 0x10FFFF')
+        if pt > sys.maxunicode:
+            error(f'code point out of range: 0x{pt:04X} > 0x{sys.maxunicode:X}')
         ch = chr(pt)
     name = unicodedata.name(ch, '')
     cat = unicodedata.category(ch)
