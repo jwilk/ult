@@ -28,12 +28,13 @@ class Tests(unittest.TestCase):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 timeout=10,
-                check=True,
+                check=False,
             )
+            err = cp.stderr.decode('UTF-8', 'replace')
+            self.assertEqual(err, '')
+            self.assertEqual(cp.returncode, 0)
             out = cp.stdout.decode('UTF-8')
             self.assertEqual(out, xout)
-            self.assertEqual(cp.stderr, b'')
-            self.assertEqual(cp.returncode, 0)
         setattr(cls, slug, method)
 
 def _read_readme():
