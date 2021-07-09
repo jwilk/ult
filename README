@@ -1,19 +1,21 @@
 .. code:: console
 
-   $ ult SECTION SIGN
-   U+00A7 SECTION SIGN
-   Text: §
-   RFC-1345: SE
+   $ ult POUND SIGN
+   U+00A3 POUND SIGN
+   Text: £
+   RFC-1345: Pd
    X11 multi-key input sequences:
-     <Multi_key> s o
-     <Multi_key> o s
-     <Multi_key> S O
-     <Multi_key> O S
-     <Multi_key> s !
-     <Multi_key> S !
-     <Multi_key> <Cyrillic_pe> <Cyrillic_a>
-   Category: Po (Other_Punctuation)
+     <Multi_key> L -
+     <Multi_key> - L
+     <Multi_key> l -
+     <Multi_key> - l
+     <dead_currency> l
+   Category: Sc (Currency_Symbol)
    Block: U+0080..U+00FF C1 Controls and Latin-1 Supplement (Latin-1 Supplement)
+   See also:
+     U+20A4 LIRA SIGN
+     U+20BA TURKISH LIRA SIGN
+     U+10192 ROMAN SEMUNCIA SIGN
 
    $ ult BACKSPACE
    U+0008 control character (C0)
