@@ -46,9 +46,11 @@ def _get_mnemonic_data():
                 if ch in errata_chars:
                     assert s[0].upper()
                     s = s[0].lower() + s[1:]
-                assert s not in seen, f'{s!r} already seen'
+                if s in seen:
+                    raise RuntimeError(f'{path}: mnemonic {s!r} already seen')
                 seen |= {s}
-                assert ch not in data, f'U+{pt:04X} already seen'
+                if ch in data:
+                    raise RuntimeError(f'{path}: U+{pt:04X} already seen')
                 data[ch] = s
     return data
 
