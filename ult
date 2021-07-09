@@ -271,7 +271,6 @@ def main():
         ch = chr(pt)
     name = unicodedata.name(ch, '')
     cat = unicodedata.category(ch)
-    long_cat = get_category_alias(cat)
     if not name:
         if cat == 'Cn':
             name = 'non-character'
@@ -306,6 +305,7 @@ def main():
         print('X11 multi-key input sequences:')
         for x11_seq in x11_seqs:
             print(' ', x11_seq)
+    long_cat = get_category_alias(cat)
     print(f'Category: {cat} ({long_cat})')
     block = get_block(ch)
     if block:
