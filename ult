@@ -249,6 +249,23 @@ def get_numeric_value(ch):
         return None
     return float2frac(nv)
 
+def format_name(ch):
+    pt = ord(ch)
+    name = unicodedata.name(ch, '')
+    cat = unicodedata.category(ch)
+    if not name:
+        if cat == 'Cn':
+            name = 'non-character'
+        elif cat == 'Cc':
+            name = 'control character'
+            if pt <= 0x1F:
+                name += ' (C0)'
+            elif 0x80 <= pt <= 0x9F:
+                name += ' (C1)'
+        elif cat == 'Cs':
+            name = 'lone surrogate'
+    return f'U+{pt:04X}{name and " "}{name or ""}'
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('name', metavar='NAME', nargs='+')
@@ -269,20 +286,8 @@ def main():
         if pt > sys.maxunicode:
             error(f'code point out of range: 0x{pt:04X} > 0x{sys.maxunicode:X}')
         ch = chr(pt)
-    name = unicodedata.name(ch, '')
     cat = unicodedata.category(ch)
-    if not name:
-        if cat == 'Cn':
-            name = 'non-character'
-        elif cat == 'Cc':
-            name = 'control character'
-            if pt <= 0x1F:
-                name += ' (C0)'
-            elif 0x80 <= pt <= 0x9F:
-                name += ' (C1)'
-        elif cat == 'Cs':
-            name = 'lone surrogate'
-    print(f'U+{pt:04X}{name and " "}{name or ""}')
+    print(format_name(ch))
     aliases = get_aliases(ch)
     if aliases:
         print('Aliases:')
@@ -317,9 +322,7 @@ def main():
     if annots.see_also:
         print('See also:')
         for xch in annots.see_also:
-            xpt = ord(xch)
-            xname = unicodedata.name(xch, '')
-            print(f'  U+{xpt:04X}{xname and " "}{xname or ""}')
+            print(' ', format_name(xch))
 
 if __name__ == '__main__':
     main()
