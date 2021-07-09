@@ -266,6 +266,16 @@ def format_name(ch):
             name = 'lone surrogate'
     return f'U+{pt:04X}{name and " "}{name or ""}'
 
+def format_glyph(ch):
+    cat = unicodedata.category(ch)
+    if cat[0] == 'C':
+        return None
+    elif cat[0] == 'M':
+        return '\N{DOTTED CIRCLE}' + ch
+    elif cat == 'Zs':
+        return f'[{ch}]'
+    return ch
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('name', metavar='NAME', nargs='+')
@@ -293,13 +303,7 @@ def main():
         print('Aliases:')
         for alias in aliases:
             print(f'  {alias.name} ({alias.label})')
-    glyph = ch
-    if cat[0] == 'C':
-        glyph = None
-    elif cat[0] == 'M':
-        glyph = '\N{DOTTED CIRCLE}' + ch
-    elif cat == 'Zs':
-        glyph = f'[{glyph}]'
+    glyph = format_glyph(ch)
     if glyph:
         print(f'Text: {glyph}')
     mnemonic = get_mnemonic(ch)
