@@ -95,6 +95,8 @@ def _get_x11_seq_data():
             if line[:1] in {'#', '\n'}:
                 continue
             match = re.match(r'(\S.*):\s*"(.*)"', line)
+            if match is None:
+                raise RuntimeError(f'{path}: cannot parse line {line!r}')
             (seq, ch) = match.groups()
             if len(ch) != 1:
                 continue
