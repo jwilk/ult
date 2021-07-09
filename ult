@@ -58,7 +58,6 @@ def get_mnemonic(ch):
     return _get_mnemonic_data().get(ch)
 
 _x11_keys = dict(
-    space=' ',
     exclam='!',
     quotedbl='"',
     numbersign='#',
