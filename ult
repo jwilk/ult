@@ -296,7 +296,6 @@ def main():
         if pt > sys.maxunicode:
             error(f'code point out of range: 0x{pt:04X} > 0x{sys.maxunicode:X}')
         ch = chr(pt)
-    cat = unicodedata.category(ch)
     print(format_name(ch))
     aliases = get_aliases(ch)
     if aliases:
@@ -314,6 +313,7 @@ def main():
         print('X11 multi-key input sequences:')
         for x11_seq in x11_seqs:
             print(' ', x11_seq)
+    cat = unicodedata.category(ch)
     long_cat = get_category_alias(cat)
     print(f'Category: {cat} ({long_cat})')
     block = get_block(ch)
