@@ -160,7 +160,7 @@ def get_annot(ch):
     for code in codes:
         lists[code] = []
     for line in s.splitlines():
-        match = re.match(fr'\A\t([{re.escape(codes)}]) (\S.*)\Z', line)
+        match = re.match(fr'\t([{re.escape(codes)}]) (\S.*)', line)
         if match is None:
             raise RuntimeError(f'U+{pt:04X} annotations: cannot parse line {line!r}')
         (code, s) = match.groups()
