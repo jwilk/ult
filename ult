@@ -142,6 +142,41 @@ def get_aliases(ch):
 
 _libunl = ctypes.CDLL('libuninameslist.so.1')
 
+# const char *uniNamesList_annot(unsigned long uni);
+_libunl_annot = _libunl.uniNamesList_annot
+_libunl_annot.argtypes = [ctypes.c_long]
+_libunl_annot.restype = ctypes.c_char_p
+
+class Annot(typing.NamedTuple):
+    see_also: list
+
+def get_annot(ch):
+    pt = ord(ch)
+    s = _libunl_annot(pt)
+    if s is None:
+        return Annot([])
+    s = s.decode('UTF-8')
+    codes = 'x*:#%=~'
+    lists = {}
+    for code in codes:
+        lists[code] = []
+    for line in s.splitlines():
+        match = re.match(fr'\A\t([{re.escape(codes)}]) (\S.*)\Z', line)
+        if match is None:
+            raise RuntimeError(f'U+{pt:04X} annotations: cannot parse line {line!r}')
+        (code, s) = match.groups()
+        if code == 'x':
+            match = re.match(r'\A(?:[(].* - ([0-9A-F]{4,})[)]|([0-9A-F]{4,}))\Z', s)
+            if match is None:
+                raise RuntimeError(f'U+{pt:04X} annotations: cannot parse line {line!r}')
+            pt = int(match.group(1) or match.group(2), 16)
+            s = chr(pt)
+        lst = lists[code]
+        lst += [s]
+    return Annot(
+        see_also=lists['x'],
+    )
+
 # int uniNamesList_blockNumber(unsigned long uni);
 _libunl_block_no = _libunl.uniNamesList_blockNumber
 _libunl_block_no.argtypes = [ctypes.c_long]
@@ -279,6 +314,13 @@ def main():
     nv = get_numeric_value(ch)
     if nv is not None:
         print(f'Numeric value: {nv}')
+    annots = get_annot(ch)
+    if annots.see_also:
+        print('See also:')
+        for xch in annots.see_also:
+            xpt = ord(xch)
+            xname = unicodedata.name(xch, '')
+            print(f'  U+{xpt:04X}{xname and " "}{xname or ""}')
 
 if __name__ == '__main__':
     main()
