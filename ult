@@ -270,9 +270,9 @@ def format_glyph(ch):
     cat = unicodedata.category(ch)
     if cat[0] == 'C':
         return None
-    elif cat[0] == 'M':
+    if cat[0] == 'M':
         return '\N{DOTTED CIRCLE}' + ch
-    elif cat == 'Zs':
+    if cat == 'Zs':
         return f'[{ch}]'
     return ch
 
