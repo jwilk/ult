@@ -16,26 +16,33 @@ here = sys.path[0]
 
 class Tests(unittest.TestCase):
 
+    __data = {}
+
     @classmethod
     def add(cls, cmd, xout):
-        slug = 'test_' + re.sub(r'\W+', '_', cmd)
-        def method(self):
-            vcmd = shlex.split(cmd)
-            if vcmd[0] != 'ult':
-                raise RuntimeError
-            vcmd[0] = f'{here}/ult'
-            cp = subprocess.run(vcmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                timeout=10,
-                check=False,
-            )
-            err = cp.stderr.decode('UTF-8', 'replace')
-            self.assertEqual(err, '')
-            self.assertEqual(cp.returncode, 0)
-            out = cp.stdout.decode('UTF-8')
-            self.assertEqual(out, xout)
-        setattr(cls, slug, method)
+        cls.__data[cmd] = xout
+
+    def test(self):
+        for cmd, xout in self.__data.items():
+            with self.subTest(cmd=cmd):
+                self._test(cmd, xout)
+
+    def _test(self, cmd, xout):
+        vcmd = shlex.split(cmd)
+        if vcmd[0] != 'ult':
+            raise RuntimeError
+        vcmd[0] = f'{here}/ult'
+        cp = subprocess.run(vcmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=10,
+            check=False,
+        )
+        err = cp.stderr.decode('UTF-8', 'replace')
+        self.assertEqual(err, '')
+        self.assertEqual(cp.returncode, 0)
+        out = cp.stdout.decode('UTF-8')
+        self.assertEqual(out, xout)
 
 def _read_readme():
     with open(f'{here}/README', 'rt', encoding='UTF-8') as file:
