@@ -4,7 +4,6 @@
 # Copyright © 2021 Jakub Wilk <jwilk@jwilk.net>
 # SPDX-License-Identifier: MIT
 
-import re
 import subprocess
 import sys
 import unittest
