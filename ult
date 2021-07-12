@@ -144,7 +144,7 @@ _libunl = ctypes.CDLL('libuninameslist.so.1')
 
 # const char *uniNamesList_annot(unsigned long uni);
 _libunl_annot = _libunl.uniNamesList_annot
-_libunl_annot.argtypes = [ctypes.c_long]
+_libunl_annot.argtypes = [ctypes.c_ulong]
 _libunl_annot.restype = ctypes.c_char_p
 
 class Annot(typing.NamedTuple):
@@ -182,7 +182,7 @@ def get_annot(ch):
 
 # int uniNamesList_blockNumber(unsigned long uni);
 _libunl_block_no = _libunl.uniNamesList_blockNumber
-_libunl_block_no.argtypes = [ctypes.c_long]
+_libunl_block_no.argtypes = [ctypes.c_ulong]
 _libunl_block_no.restype = ctypes.c_int
 
 # long uniNamesList_blockStart(int uniBlock);
