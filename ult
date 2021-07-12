@@ -290,7 +290,6 @@ def main():
         if len(ch) != 1:
             # TODO!
             error('support for named sequences is not implemented yet')
-        pt = ord(ch)
     else:
         pt = int(match.group(1), 16)
         if pt > sys.maxunicode:
