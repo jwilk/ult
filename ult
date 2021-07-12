@@ -31,7 +31,7 @@ def _get_mnemonic_data():
     seen = set()
     data = {}
     path = '/usr/share/doc/RFC/links/rfc1345.txt.gz'
-    errata_chars= {
+    errata_chars = {
         # https://www.rfc-editor.org/errata/eid2683
         '\N{LATIN SMALL LETTER N WITH CIRCUMFLEX BELOW}',
         '\N{LATIN SMALL LETTER S WITH DOT BELOW AND DOT ABOVE}',
