@@ -284,17 +284,28 @@ def main():
     match = re.match(r'\AU[+]([0-9A-F]+)\Z', name)
     if match is None:
         try:
-            ch = unicodedata.lookup(name)
+            s = unicodedata.lookup(name)
         except KeyError as exc:
             error(exc.args[0])
-        if len(ch) != 1:
-            # TODO!
-            error('support for named sequences is not implemented yet')
+        if len(s) > 1:
+            print(name.upper())
+            print('Sequence:')
+            for ch in s:
+                print(' ', format_name(ch))
+            print()
     else:
         pt = int(match.group(1), 16)
         if pt > sys.maxunicode:
             error(f'code point out of range: 0x{pt:04X} > 0x{sys.maxunicode:X}')
-        ch = chr(pt)
+        s = chr(pt)
+    want_sep = False
+    for ch in s:
+        if want_sep:
+            print()
+        show_char(ch)
+        want_sep = True
+
+def show_char(ch):
     print(format_name(ch))
     aliases = get_aliases(ch)
     if aliases:
