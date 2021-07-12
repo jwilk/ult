@@ -163,6 +163,9 @@ def get_annot(ch):
     for line in s.splitlines():
         match = re.match(fr'\t([{re.escape(codes)}]) (\S.*)', line)
         if match is None:
+            if line.startswith('\t\t'):
+                # FIXME?
+                continue
             raise RuntimeError(f'U+{pt:04X} annotations: cannot parse line {line!r}')
         (code, s) = match.groups()
         if code == 'x':
