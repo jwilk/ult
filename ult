@@ -282,7 +282,12 @@ def main():
     options = ap.parse_args()
     name = ' '.join(options.name).upper()
     match = re.match(r'\AU[+]([0-9A-F]+)\Z', name)
-    if match is None:
+    if match:
+        pt = int(match.group(1), 16)
+        if pt > sys.maxunicode:
+            error(f'code point out of range: 0x{pt:04X} > 0x{sys.maxunicode:X}')
+        s = chr(pt)
+    else:
         try:
             s = unicodedata.lookup(name)
         except KeyError as exc:
@@ -293,11 +298,6 @@ def main():
             for ch in s:
                 print(' ', format_name(ch))
             print()
-    else:
-        pt = int(match.group(1), 16)
-        if pt > sys.maxunicode:
-            error(f'code point out of range: 0x{pt:04X} > 0x{sys.maxunicode:X}')
-        s = chr(pt)
     want_sep = False
     for ch in s:
         if want_sep:
