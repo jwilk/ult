@@ -281,6 +281,8 @@ def format_glyph(ch):
         return '\N{DOTTED CIRCLE}' + ch
     if cat == 'Zs':
         return f'[{ch}]'
+    if cat in {'Zl', 'Zp'}:
+        return None
     return ch
 
 def main():
