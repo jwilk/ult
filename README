@@ -18,7 +18,7 @@
      U+10192 ROMAN SEMUNCIA SIGN
 
    $ ult BACKSPACE
-   U+0008 control character (C0)
+   U+0008 <control-0008>
    Aliases:
      BACKSPACE (control)
      BS (abbreviation)

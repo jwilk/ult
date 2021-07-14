@@ -258,16 +258,19 @@ def format_name(ch):
     name = unicodedata.name(ch, '')
     cat = unicodedata.category(ch)
     if not name:
-        if cat == 'Cn':
-            name = 'non-character'
-        elif cat == 'Cc':
-            name = 'control character'
-            if pt <= 0x1F:
-                name += ' (C0)'
-            elif 0x80 <= pt <= 0x9F:
-                name += ' (C1)'
-        elif cat == 'Cs':
-            name = 'lone surrogate'
+        # code point label
+        # (see The Unicode Standard version 13.0, §4.8)
+        label_prefix = dict(
+            Cc='control',
+            Cn='reserved',
+            Co='private-use',
+            Cs='surrogate',
+        ).get(cat)
+        if pt & 0xFFFF >= 0xFFFE or 0xFDD0 <= pt < 0xFDF0:
+            assert label_prefix == 'reserved'
+            label_prefix = 'noncharacter'
+        if label_prefix:
+            name = f'<{label_prefix}-{pt:04X}>'
     return f'U+{pt:04X}{name and " "}{name or ""}'
 
 def format_glyph(ch):
