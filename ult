@@ -12,6 +12,7 @@ import fractions
 import functools
 import gzip
 import re
+import signal
 import sys
 import typing
 import unicodedata
@@ -289,6 +290,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('name', metavar='NAME', nargs='+')
     options = ap.parse_args()
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
     name = ' '.join(options.name).upper()
     match = re.match(r'\AU[+]([0-9A-F]+)\Z', name)
     if match:
