@@ -288,10 +288,11 @@ def format_glyph(ch):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('name', metavar='NAME', nargs='+')
+    ap.add_argument('name', metavar='NAME')
+    ap.add_argument('tail', nargs='*', help=argparse.SUPPRESS)
     options = ap.parse_args()
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-    name = ' '.join(options.name).upper()
+    name = ' '.join([options.name, *options.tail]).upper()
     match = re.match(r'\AU[+]([0-9A-F]+)\Z', name)
     if match:
         pt = int(match.group(1), 16)
