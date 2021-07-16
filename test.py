@@ -41,7 +41,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(err, '')
         self.assertEqual(cp.returncode, 0)
         out = cp.stdout.decode('UTF-8')
-        self.assertEqual(out, xout)
+        self.assertEqual(xout, out)
 
 def _read_readme():
     with open(f'{here}/README', 'rt', encoding='UTF-8') as file:
