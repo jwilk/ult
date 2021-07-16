@@ -48,7 +48,7 @@ def _read_readme():
         cmd = None
         para = []
         for line in file:
-            line = line.rstrip()
+            line = line.rstrip('\n')
             if not line:
                 if cmd and para:
                     xout = '\n'.join(para)
@@ -59,7 +59,7 @@ def _read_readme():
             if line[:3] != '   ':
                 continue
             line = line[3:]
-            if line[0] == '$':
+            if line[:1] == '$':
                 cmd = line[1:].strip()
             else:
                 para += [line]
