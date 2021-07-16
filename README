@@ -1,6 +1,16 @@
 .. code:: console
 
-   $ ult POUND SIGN
+   $ ult --help
+   usage: ult [-h] [-s] NAME
+   
+   positional arguments:
+     NAME
+   
+   optional arguments:
+     -h, --help    show this help message and exit
+     -s, --string  show info about characters in the string
+
+   $ ult -s £
    U+00A3 POUND SIGN
    Text: £
    RFC-1345: Pd
