@@ -1,0 +1,19 @@
+$ ult 'E*ASH'
+U+2013 EN DASH
+Text: –
+RFC-1345: -N
+X11 multi-key input sequences:
+  <Multi_key> - - .
+Category: Pd (Dash_Punctuation)
+Block: U+2000..U+206F General Punctuation
+
+U+2014 EM DASH
+Text: —
+RFC-1345: -M
+X11 multi-key input sequences:
+  <Multi_key> - - -
+Category: Pd (Dash_Punctuation)
+Block: U+2000..U+206F General Punctuation
+See also:
+  U+2E3A TWO-EM DASH
+  U+30FC KATAKANA-HIRAGANA PROLONGED SOUND MARK
