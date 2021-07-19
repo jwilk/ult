@@ -1,0 +1,16 @@
+$ ult -s £
+U+00A3 POUND SIGN
+Text: £
+RFC-1345: Pd
+X11 multi-key input sequences:
+  <Multi_key> L -
+  <Multi_key> - L
+  <Multi_key> l -
+  <Multi_key> - l
+  <dead_currency> l
+Category: Sc (Currency_Symbol)
+Block: U+0080..U+00FF C1 Controls and Latin-1 Supplement (Latin-1 Supplement)
+See also:
+  U+20A4 LIRA SIGN
+  U+20BA TURKISH LIRA SIGN
+  U+10192 ROMAN SEMUNCIA SIGN
