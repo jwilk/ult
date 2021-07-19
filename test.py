@@ -4,10 +4,10 @@
 # Copyright © 2021 Jakub Wilk <jwilk@jwilk.net>
 # SPDX-License-Identifier: MIT
 
+import shlex
 import subprocess
 import sys
 import unittest
-import shlex
 
 type(0_0)  # Python >= 3.6 is required
 
