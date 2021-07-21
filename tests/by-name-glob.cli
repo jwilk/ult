@@ -4,6 +4,7 @@ Text: –
 RFC-1345: -N
 X11 multi-key input sequences:
   <Multi_key> - - .
+HTML5: &ndash;
 Category: Pd (Dash_Punctuation)
 Block: U+2000..U+206F General Punctuation
 
@@ -12,6 +13,7 @@ Text: —
 RFC-1345: -M
 X11 multi-key input sequences:
   <Multi_key> - - -
+HTML5: &mdash;
 Category: Pd (Dash_Punctuation)
 Block: U+2000..U+206F General Punctuation
 See also:

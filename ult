@@ -17,6 +17,8 @@ import sys
 import typing
 import unicodedata
 
+import html5lib
+
 type(0_0)  # Python >= 3.6 is required
 
 prog = argparse.ArgumentParser().prog
@@ -119,6 +121,19 @@ def _get_x11_seq_data():
 
 def get_x11_seqs(ch):
     return _get_x11_seq_data().get(ch)
+
+@cache
+def _get_html5_entities():
+    data = collections.defaultdict(set)
+    for ent, ch in html5lib.constants.entities.items():
+        if ent[-1:] != ';':
+            ent += ';'
+        data[ch].add(ent)
+    return data
+
+def get_html5_entities(ch):
+    data = _get_html5_entities()
+    return data.get(ch)
 
 class Alias(typing.NamedTuple):
     name: str
@@ -357,6 +372,12 @@ def show_char(ch):
         print('X11 multi-key input sequences:')
         for x11_seq in x11_seqs:
             print(' ', x11_seq)
+    ents = get_html5_entities(ch)
+    if ents:
+        print(
+            'HTML5:',
+            *(f'&{e}' for e in sorted(ents))
+        )
     cat = unicodedata.category(ch)
     long_cat = get_category_alias(cat)
     print(f'Category: {cat} ({long_cat})')
