@@ -4,6 +4,10 @@
 # Copyright © 2021 Jakub Wilk <jwilk@jwilk.net>
 # SPDX-License-Identifier: MIT
 
+'''
+look up Unicode character properties
+'''
+
 import argparse
 import collections
 import ctypes
@@ -21,6 +25,8 @@ import html5lib
 import icu
 
 type(0_0)  # Python >= 3.6 is required
+
+__doc__ = (__doc__ or '').strip()
 
 prog = argparse.ArgumentParser().prog
 
@@ -321,7 +327,7 @@ def format_glyph(ch):
     return ch
 
 def main():
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('-s', '--string', action='store_true', help='show info about characters in the string')
     ap.add_argument('name', metavar='NAME')
     ap.add_argument('tail', metavar='...', nargs=argparse.REMAINDER, help=argparse.SUPPRESS)

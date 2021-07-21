@@ -3,6 +3,8 @@
    $ ult --help
    usage: ult [-h] [-s] NAME
 
+   look up Unicode character properties
+
    positional arguments:
      NAME
 
