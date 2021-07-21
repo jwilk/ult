@@ -7,6 +7,7 @@ X11 multi-key input sequences:
 HTML5: &ndash;
 Category: Pd (Dash_Punctuation)
 Block: U+2000..U+206F General Punctuation
+Script: Zyyy (Common)
 
 U+2014 EM DASH
 Text: —
@@ -16,6 +17,7 @@ X11 multi-key input sequences:
 HTML5: &mdash;
 Category: Pd (Dash_Punctuation)
 Block: U+2000..U+206F General Punctuation
+Script: Zyyy (Common)
 See also:
   U+2E3A TWO-EM DASH
   U+30FC KATAKANA-HIRAGANA PROLONGED SOUND MARK

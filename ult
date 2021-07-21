@@ -18,6 +18,7 @@ import typing
 import unicodedata
 
 import html5lib
+import icu
 
 type(0_0)  # Python >= 3.6 is required
 
@@ -231,6 +232,24 @@ def get_block(ch):
     name = _libunl_block_name(i).decode('UTF-8')
     return Block(start, stop, name)
 
+class PropertyValue(typing.NamedTuple):
+    short: str
+    long: str
+
+    def __str__(self):
+        return f'{self.short} ({self.long})'
+
+def get_script(ch):
+    i = icu.Char.getIntPropertyValue(ch, icu.UProperty.SCRIPT)
+    names = (
+        icu.Char.getPropertyValueName(icu.UProperty.SCRIPT, i, choice)
+        for choice in (
+            icu.UPropertyNameChoice.SHORT_PROPERTY_NAME,
+            icu.UPropertyNameChoice.LONG_PROPERTY_NAME,
+        )
+    )
+    return PropertyValue(*names)
+
 @cache
 def _get_prop_alias_data():
     data = collections.defaultdict(dict)
@@ -384,6 +403,9 @@ def show_char(ch):
     block = get_block(ch)
     if block:
         print(f'Block: U+{block.start:04X}..U+{block.stop:04X} {block.name}')
+    script = get_script(ch)
+    if script.short != 'Zzzz':
+        print(f'Script: {script}')
     nv = get_numeric_value(ch)
     if nv is not None:
         print(f'Numeric value: {nv}')

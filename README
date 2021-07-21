@@ -23,6 +23,7 @@
    HTML5: &pound;
    Category: Sc (Currency_Symbol)
    Block: U+0080..U+00FF C1 Controls and Latin-1 Supplement (Latin-1 Supplement)
+   Script: Zyyy (Common)
    See also:
      U+20A4 LIRA SIGN
      U+20BA TURKISH LIRA SIGN
@@ -36,11 +37,13 @@
    RFC-1345: BS
    Category: Cc (Control)
    Block: U+0000..U+007F C0 Controls and Basic Latin (Basic Latin)
+   Script: Zyyy (Common)
 
    $ ult U+2603
    U+2603 SNOWMAN
    Text: ☃
    Category: So (Other_Symbol)
    Block: U+2600..U+26FF Miscellaneous Symbols
+   Script: Zyyy (Common)
 
 .. vim:ft=rst ts=3 sts=3 sw=3 et
