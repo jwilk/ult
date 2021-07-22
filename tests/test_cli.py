@@ -18,6 +18,8 @@ base = f'{here}/..'
 
 class Tests(unittest.TestCase):
 
+    maxDiff = None
+
     @classmethod
     def add(cls, name, cmd, xout):
         def t(self):
