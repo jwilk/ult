@@ -171,12 +171,13 @@ _libunl_annot.restype = ctypes.c_char_p
 
 class Annot(typing.NamedTuple):
     see_also: list
+    comments: list
 
 def get_annot(ch):
     pt = ord(ch)
     s = _libunl_annot(pt)
     if s is None:
-        return Annot([])
+        return Annot([], [])
     s = s.decode('UTF-8')
     codes = 'x*:#%=~'
     lists = {}
@@ -200,6 +201,7 @@ def get_annot(ch):
         lst += [s]
     return Annot(
         see_also=lists['x'],
+        comments=lists['*'],
     )
 
 # int uniNamesList_blockNumber(unsigned long uni);
@@ -419,6 +421,10 @@ def show_char(ch):
         print('See also:')
         for xch in annots.see_also:
             print(' ', format_name(xch))
+    if annots.comments:
+        print('Comments:')
+        for s in annots.comments:
+            print(' ', s)
 
 if __name__ == '__main__':
     main()
