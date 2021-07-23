@@ -330,6 +330,15 @@ def format_glyph(ch):
     if cat[0] == 'C':
         return None
     if cat[0] == 'M':
+        if ch in '\u180B\u180C\u180D':
+            # MONGOLIAN FREE VARIATION SELECTOR {ONE,TWO,THREE}
+            return None
+        if '\uFE00' <= ch <= '\uFE0F':
+            # VARIATION SELECTOR-{1,…,16}
+            return None
+        if '\U000E0100' <= ch <= '\U000E01EF':
+            # VARIATION SELECTOR-{17,…,256}
+            return None
         return '\N{DOTTED CIRCLE}' + ch
     if cat == 'Zs':
         return f'[{ch}]'
