@@ -195,8 +195,8 @@ def get_annot(ch):
             match = re.match(r'\A(?:[(].* - ([0-9A-F]{4,})[)]|([0-9A-F]{4,}))\Z', s)
             if match is None:
                 raise RuntimeError(f'U+{pt:04X} annotations: cannot parse line {line!r}')
-            pt = int(match.group(1) or match.group(2), 16)
-            s = chr(pt)
+            xpt = int(match.group(1) or match.group(2), 16)
+            s = chr(xpt)
         lst = lists[code]
         lst += [s]
     return Annot(
