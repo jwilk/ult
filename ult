@@ -172,15 +172,17 @@ _libunl_annot.restype = ctypes.c_char_p
 class Annot(typing.NamedTuple):
     see_also: list
     comments: list
+    variations: list
 
 def get_annot(ch):
     pt = ord(ch)
     s = _libunl_annot(pt)
     if s is None:
-        return Annot([], [])
+        return Annot([], [], {})
     s = s.decode('UTF-8')
     codes = 'x*:#%=~'
     lists = {}
+    variations = {}
     for code in codes:
         lists[code] = []
     for line in s.splitlines():
@@ -197,11 +199,19 @@ def get_annot(ch):
                 raise RuntimeError(f'U+{pt:04X} annotations: cannot parse line {line!r}')
             xpt = int(match.group(1) or match.group(2), 16)
             s = chr(xpt)
+        elif code == '~':
+            match = re.match(fr'\A{pt:04X} (FE0[0-D]) (\S.*)\Z', s)
+            if match is None:
+                raise RuntimeError(f'U+{pt:04X} annotations: cannot parse line {line!r}')
+            xpt = int(match.group(1), 16)
+            label = match.group(2)
+            variations[chr(xpt)] = label
         lst = lists[code]
         lst += [s]
     return Annot(
         see_also=lists['x'],
         comments=lists['*'],
+        variations=variations,
     )
 
 # int uniNamesList_blockNumber(unsigned long uni);
@@ -417,6 +427,10 @@ def show_char(ch):
     if nv is not None:
         print(f'Numeric value: {nv}')
     annots = get_annot(ch)
+    if annots.variations:
+        print('Variations:')
+        for vch, vlabel in sorted(annots.variations.items()):
+            print(' ', format_name(vch), vlabel)
     if annots.see_also:
         print('See also:')
         for xch in annots.see_also:
