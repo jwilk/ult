@@ -8,7 +8,7 @@
    positional arguments:
      NAME
 
-   optional arguments:
+   options:
      -h, --help    show this help message and exit
      -s, --string  show info about characters in the string
 
