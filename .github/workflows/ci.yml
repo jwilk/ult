@@ -37,6 +37,8 @@ jobs:
         python3 -m pip install --user pygments restructuredtext-lint
         rst-lint --level=info --encoding=UTF-8 README
     - run: |
+        sudo apt-get update
+    - run: |
         sudo apt-get install doc-rfc-informational libuninameslist1 unicode-data
     - run: |
         python3 -m pip install html5lib
