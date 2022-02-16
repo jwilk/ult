@@ -37,17 +37,23 @@ jobs:
       run: |
         python3 -m pip install restructuredtext-lint pygments
         rst-lint --level=info --encoding=UTF-8 README
-    - run: |
+    - name: set up APT
+      run: |
         sudo apt-get update
-    - run: |
+    - name: apt install deps
+      run: |
         sudo apt-get install doc-rfc-informational libuninameslist1 unicode-data
-    - run: |
+    - name: pip install html5lib
+      run: |
         python3 -m pip install html5lib
-    - run: |
+    - name: pip install wheel
+      run: |
         python3 -m pip install wheel
-    - run: |
+    - name: pip install PyICU
+      run: |
         python3 -m pip install --verbose pyicu
-    - run: |
+    - name: run tests
+      run: |
         make test
 
 # vim:ts=2 sts=2 sw=2 et
