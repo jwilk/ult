@@ -39,6 +39,7 @@ jobs:
         rst-lint --level=info --encoding=UTF-8 README
     - name: set up APT
       run: |
+        printf 'Apt::Install-Recommends "false";\n' | sudo tee -a /etc/apt/apt.conf
         sudo apt-get update
     - name: apt install deps
       run: |
