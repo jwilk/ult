@@ -21,7 +21,7 @@ jobs:
       with:
         path: ~/.cache/pip
         key: pip-${{matrix.os}}-python${{matrix.python-version}}
-    - name: Set up Python ${{matrix.python-version}}
+    - name: set up Python ${{matrix.python-version}}
       uses: actions/setup-python@v2
       with:
         python-version: ${{matrix.python-version}}
