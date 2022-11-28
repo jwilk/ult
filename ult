@@ -362,7 +362,7 @@ def main():
     ap.add_argument('tail', metavar='...', nargs=argparse.REMAINDER, help=argparse.SUPPRESS)
     options = ap.parse_args()
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-    name = ' '.join([options.name, *options.tail])
+    name = str.join(' ', [options.name, *options.tail])
     if options.string:
         show_chars(name)
         return
