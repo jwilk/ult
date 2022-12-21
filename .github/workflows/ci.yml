@@ -49,9 +49,6 @@ jobs:
     - name: apt install deps
       run: |
         sudo apt-get install doc-rfc-informational libuninameslist1 unicode-data
-    - name: pip install html5lib
-      run: |
-        python3 -m pip install html5lib
     - name: pip install wheel
       run: |
         python3 -m pip install wheel
