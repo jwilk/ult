@@ -8,6 +8,7 @@ Aliases:
   NL (abbreviation)
   EOL (abbreviation)
 RFC-1345: LF
+C escape: \n
 HTML5: &NewLine;
 Category: Cc (Control)
 Block: U+0000..U+007F C0 Controls and Basic Latin (Basic Latin)

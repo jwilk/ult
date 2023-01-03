@@ -441,6 +441,8 @@ def show_char(ch):
         print('X11 multi-key input sequences:')
         for x11_seq in x11_seqs:
             print(' ', x11_seq)
+    if ch in C.escape:
+        print('C escape:', C.escape[ch])
     ents = get_html5_entities(ch)
     if ents:
         print(

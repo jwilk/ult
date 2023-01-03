@@ -36,6 +36,7 @@
      BACKSPACE (control)
      BS (abbreviation)
    RFC-1345: BS
+   C escape: \b
    Category: Cc (Control)
    Block: U+0000..U+007F C0 Controls and Basic Latin (Basic Latin)
    Script: Zyyy (Common)
