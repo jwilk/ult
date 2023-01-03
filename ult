@@ -9,6 +9,7 @@ look up Unicode character properties
 '''
 
 import argparse
+import ast
 import collections
 import ctypes
 import fnmatch
@@ -352,6 +353,16 @@ def format_glyph(ch):
         return None
     return ch
 
+class C():
+
+    escape = {}
+    unescape = {}
+    for e in 'abfnrtv':
+        c = ast.literal_eval(f'"\\{e}"')
+        unescape[f'\\{e}'] = c
+        escape[c] = f'\\{e}'
+    del e, c
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     if sys.version_info < (3, 10):
@@ -365,6 +376,10 @@ def main():
     name = str.join(' ', [options.name, *options.tail])
     if options.string:
         show_chars(name)
+        return
+    if name in C.unescape:
+        s = C.unescape[name]
+        show_chars(s)
         return
     name = name.upper()
     match = re.match(r'\AU[+]([0-9A-F]+)\Z', name)

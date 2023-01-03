@@ -1,0 +1,14 @@
+$ ult '\n'
+U+000A <control-000A>
+Aliases:
+  LINE FEED (control)
+  NEW LINE (control)
+  END OF LINE (control)
+  LF (abbreviation)
+  NL (abbreviation)
+  EOL (abbreviation)
+RFC-1345: LF
+HTML5: &NewLine;
+Category: Cc (Control)
+Block: U+0000..U+007F C0 Controls and Basic Latin (Basic Latin)
+Script: Zyyy (Common)
