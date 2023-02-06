@@ -8,7 +8,6 @@ import glob
 import os
 import shlex
 import subprocess
-import sys
 import unittest
 
 type(0_0)  # Python >= 3.6 is required
