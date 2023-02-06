@@ -44,6 +44,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(xout, out)
 
 def _read_files():
+    ok = False
     for path in glob.iglob(f'{here}/*.cli'):
         name = os.path.basename(path)
         name = os.path.splitext(name)[0]
@@ -54,6 +55,9 @@ def _read_files():
             cmd = line[2:]
             xout = file.read()
             Tests.add(name, cmd, xout)
+        ok = True
+    if not ok:
+        raise RuntimeError('no test files found')
 _read_files()
 
 if __name__ == '__main__':
