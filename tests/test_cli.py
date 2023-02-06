@@ -13,7 +13,7 @@ import unittest
 
 type(0_0)  # Python >= 3.6 is required
 
-here = sys.path[0]
+here = os.path.dirname(__file__)
 base = f'{here}/..'
 
 class Tests(unittest.TestCase):
