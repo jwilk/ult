@@ -1,0 +1,11 @@
+$ ult '&frac12;'
+U+00BD VULGAR FRACTION ONE HALF
+Text: ½
+RFC-1345: 12
+X11 multi-key input sequences:
+  <Multi_key> 1 2
+HTML5: &frac12; &half;
+Category: No (Other_Number)
+Block: U+0080..U+00FF C1 Controls and Latin-1 Supplement (Latin-1 Supplement)
+Script: Zyyy (Common)
+Numeric value: 1/2

@@ -388,13 +388,25 @@ def main():
         s = C.unescape[name]
         show_chars(s)
         return
+    match = re.fullmatch(r'[uU][+]([0-9A-Fa-f]+)|&(?:#x([0-9A-Fa-f]+)|#([0-9]+)|([^\s&#;]+));?', name)
     name = name.upper()
-    match = re.fullmatch(r'U[+]([0-9A-F]+)', name)
     if match:
-        pt = int(match.group(1), 16)
-        if pt > sys.maxunicode:
-            error(f'code point out of range: 0x{pt:04X} > 0x{sys.maxunicode:X}')
-        s = chr(pt)
+        (pt_hex1, pt_hex2, pt_dec, ent) = match.groups()
+        if ent is not None:
+            assert ent[-1] != ';'
+            ent += ';'
+            try:
+                s = html.entities.html5[ent]
+            except KeyError:
+                error(f'no such HTML5 entity: &{ent}')
+        else:
+            if pt_dec is not None:
+                pt = int(pt_dec)
+            else:
+                pt = int(pt_hex1 or pt_hex2, 16)
+            if pt > sys.maxunicode:
+                error(f'code point out of range: 0x{pt:04X} > 0x{sys.maxunicode:X}')
+            s = chr(pt)
     elif set(name) & set('?*[]'):
         pattern = name
         regexp = fnmatch.translate(pattern)

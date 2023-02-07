@@ -1,0 +1,11 @@
+$ ult '&#188;'
+U+00BC VULGAR FRACTION ONE QUARTER
+Text: ¼
+RFC-1345: 14
+X11 multi-key input sequences:
+  <Multi_key> 1 4
+HTML5: &frac14;
+Category: No (Other_Number)
+Block: U+0080..U+00FF C1 Controls and Latin-1 Supplement (Latin-1 Supplement)
+Script: Zyyy (Common)
+Numeric value: 1/4
