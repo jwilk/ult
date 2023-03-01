@@ -274,11 +274,43 @@ def get_script(ch):
     )
     return PropertyValue(*names)
 
+_age_to_date = {
+    # source: https://www.unicode.org/versions/enumeratedversions.html
+    '1.1': 1993,
+    '2.0': 1996,
+    '2.1': 1998,
+    '3.0': 1999,
+    '3.1': 2001,
+    '3.2': 2002,
+    '4.0': 2003,
+    '4.1': 2005,
+    '5.0': 2006,
+    '5.1': 2008,
+    '5.2': 2009,
+    '6.0': 2010,
+    '6.1': 2012,
+    '6.2': 2012,
+    '6.3': 2013,
+    '7.0': 2014,
+    '8.0': 2015,
+    '9.0': 2016,
+    '10.0': 2017,
+    '11.0': 2018,
+    '12.0': 2019,
+    '12.1': 2019,
+    '13.0': 2020,
+    '14.0': 2021,
+    '15.0': 2022,
+}
+
 def get_age(ch):
     # TODO: cover Unicode 1.0 too
     age = icu.Char.charAge(ch)
     if age == '0.0':
-        age = None
+        return None
+    date = _age_to_date.get(age)
+    if date is not None:
+        age = f'{age} ({date})'
     return age
 
 @cache
