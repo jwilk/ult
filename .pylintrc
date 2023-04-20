@@ -1,5 +1,7 @@
 [MASTER]
-extension-pkg-whitelist = _icu
+extension-pkg-whitelist =
+    _icu,
+    icu._icu_,
 load-plugins = pylint.extensions.check_elif
 
 [MESSAGES CONTROL]
