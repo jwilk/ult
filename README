@@ -1,7 +1,7 @@
 .. code:: console
 
    $ ult --help
-   usage: ult [-h] [-s] NAME
+   usage: ult [-h] [-s] [-p] NAME
 
    look up Unicode character properties
 
@@ -11,6 +11,7 @@
    options:
      -h, --help    show this help message and exit
      -s, --string  show info about characters in the string
+     -p, --print   print only characters
 
    $ ult -s ħ
    U+0127 LATIN SMALL LETTER H WITH STROKE

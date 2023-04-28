@@ -408,17 +408,22 @@ def main():
         # https://bugs.python.org/issue9694
         ap._optionals.title = 'options'  # pylint: disable=protected-access
     ap.add_argument('-s', '--string', action='store_true', help='show info about characters in the string')
+    ap.add_argument('-p', '--print', action='store_true', help='print only characters')
     ap.add_argument('name', metavar='NAME')
     ap.add_argument('tail', metavar='...', nargs=argparse.REMAINDER, help=argparse.SUPPRESS)
     options = ap.parse_args()
+    if options.print:
+        show = print_chars
+    else:
+        show = show_chars
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
     name = str.join(' ', [options.name, *options.tail])
     if options.string:
-        show_chars(name)
+        show(name)
         return
     if name in C.unescape:
         s = C.unescape[name]
-        show_chars(s)
+        show(s)
         return
     match = re.fullmatch(r'[uU][+]([0-9A-Fa-f]+)|&(?:#x([0-9A-Fa-f]+)|#([0-9]+)|([^\s&#;]+));?', name)
     name = name.upper()
@@ -464,7 +469,13 @@ def main():
             for ch in s:
                 print(' ', format_name(ch))
             print()
-    show_chars(s)
+    show(s)
+
+def print_chars(s):
+    for ch in s:
+        glyph = format_glyph(ch)
+        if glyph:
+            print(glyph)
 
 def show_chars(s):
     want_sep = False
