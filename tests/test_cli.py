@@ -10,7 +10,7 @@ import shlex
 import subprocess
 import unittest
 
-type(0_0)  # Python >= 3.6 is required
+int(0_0)  # Python >= 3.6 is required
 
 here = os.path.dirname(__file__)
 base = f'{here}/..'
