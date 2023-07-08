@@ -1,0 +1,17 @@
+$ ult 'TAMIL CONSONANT K'
+TAMIL CONSONANT K
+Sequence:
+  U+0B95 TAMIL LETTER KA
+  U+0BCD TAMIL SIGN VIRAMA
+
+U+0B95 TAMIL LETTER KA
+Text: க
+Category: Lo (Other_Letter)
+Block: U+0B80..U+0BFF Tamil
+Script: Taml (Tamil)
+
+U+0BCD TAMIL SIGN VIRAMA
+Text: ◌்
+Category: Mn (Nonspacing_Mark)
+Block: U+0B80..U+0BFF Tamil
+Script: Taml (Tamil)
