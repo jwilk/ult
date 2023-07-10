@@ -53,7 +53,9 @@ class VersionAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         print(f'{parser.prog} {__version__}')
         print('+ Python {0}.{1}.{2}'.format(*sys.version_info))
-        print(f'  + Unicode {unicodedata.unidata_version}')
+        unidata_ver = unicodedata.unidata_version
+        unidata_ver = re.sub(r'([.]\d+)[.]0\Z', r'\1', unidata_ver)
+        print(f'  + Unicode {unidata_ver}')
         if icu:
             print(f'+ PyICU {icu.VERSION}')
             print(f'  + Unicode {icu.UNICODE_VERSION}')
