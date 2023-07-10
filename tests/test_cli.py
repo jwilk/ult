@@ -6,8 +6,10 @@
 
 import glob
 import os
+import re
 import shlex
 import subprocess
+import textwrap
 import unittest
 
 int(0_0)  # Python >= 3.6 is required
@@ -57,6 +59,19 @@ def _read_files():
         ok = True
     if not ok:
         raise RuntimeError('no test files found')
+    with open(f'{base}/README', 'rt', encoding='UTF-8') as file:
+        readme = file.read()
+    matches = re.finditer('   [$] (ult .*)\n((?:(?:   (?![$] ).*)?\n)+)', readme)
+    ok = False
+    for i, match in enumerate(matches, start=1):
+        cmd, out = match.groups()
+        out = textwrap.dedent(out)
+        assert out[-2:] == '\n\n'
+        out = out[:-1]
+        Tests.add(f'README-{i}', cmd, out)
+        ok = True
+    if not ok:
+        raise RuntimeError('no README examples found')
 _read_files()
 
 if __name__ == '__main__':
