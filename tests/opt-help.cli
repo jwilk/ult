@@ -1,5 +1,5 @@
 $ ult --help
-usage: ult [-h] [--version] [-s] [-p] NAME
+usage: ult [-h] [--version] [-r | -s] [-p] NAME
 
 look up Unicode character properties
 
@@ -9,5 +9,6 @@ positional arguments:
 options:
   -h, --help    show this help message and exit
   --version     show version information and exit
+  -r, --regexp  show info about characters matching regexp
   -s, --string  show info about characters in the string
   -p, --print   print only characters

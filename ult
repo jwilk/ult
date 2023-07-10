@@ -468,7 +468,9 @@ def main():
         # https://bugs.python.org/issue9694
         ap._optionals.title = 'options'  # pylint: disable=protected-access
     ap.add_argument('--version', action=VersionAction)
-    ap.add_argument('-s', '--string', action='store_true', help='show info about characters in the string')
+    ag = ap.add_mutually_exclusive_group()
+    ag.add_argument('-r', '--regexp', action='store_true', help='show info about characters matching regexp')
+    ag.add_argument('-s', '--string', action='store_true', help='show info about characters in the string')
     ap.add_argument('-p', '--print', action='store_true', help='print only characters')
     ap.add_argument('name', metavar='NAME')
     ap.add_argument('tail', metavar='...', nargs=argparse.REMAINDER, help=argparse.SUPPRESS)
@@ -481,6 +483,11 @@ def main():
     name = str.join(' ', [options.name, *options.tail])
     if options.string:
         show(name)
+        return
+    if options.regexp:
+        regexp = re.compile(name, flags=re.IGNORECASE)
+        s = filter_char_names(regexp.search)
+        show(s)
         return
     if name in C.unescape:
         s = C.unescape[name]
