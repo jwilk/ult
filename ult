@@ -58,6 +58,8 @@ class VersionAction(argparse.Action):
             print(f'+ PyICU {icu.VERSION}')
             print(f'  + Unicode {icu.UNICODE_VERSION}')
             print(f'  + ICU {icu.ICU_VERSION}')
+        print('+ LibUniNamesList')
+        print(f'  + Unicode {get_unl_version()}')
         parser.exit()
 
 def warning(msg):
@@ -196,6 +198,17 @@ def get_aliases(ch):
     return _get_alias_data().get(ch)
 
 _libunl = ctypes.CDLL('libuninameslist.so.1')
+
+# const char *uniNamesList_NamesListVersion(void);
+_libunl_version =_libunl.uniNamesList_NamesListVersion
+_libunl_version.argtypes = []
+_libunl_version.restype = ctypes.c_char_p
+
+def get_unl_version():
+    v = _libunl_version()
+    v = v.decode('ASCII')
+    v = re.sub(r'\ANameslist-Version: ', '', v)
+    return v
 
 # const char *uniNamesList_annot(unsigned long uni);
 _libunl_annot = _libunl.uniNamesList_annot
