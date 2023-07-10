@@ -452,15 +452,13 @@ class C():
         escape[c] = f'\\{e}'
     del e, c
 
-def grep_char_names(regexp):
-    regexp = re.compile(regexp)
-    regexp_match = regexp.match
+def filter_char_names(flt):
     for pt in range(0xF0000):
         ch = chr(pt)
         name = unicodedata.name(ch, None)
         if not name:
             continue
-        if regexp_match(name):
+        if flt(name):
             yield ch
     # FIXME: We should take aliases and named sequences into account.
 
@@ -510,7 +508,8 @@ def main():
     elif set(name) & set('?*[]'):
         pattern = name
         regexp = fnmatch.translate(pattern)
-        s = grep_char_names(regexp)
+        regexp = re.compile(regexp)
+        s = filter_char_names(regexp.match)
     else:
         try:
             s = unicodedata.lookup(name)
