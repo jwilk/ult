@@ -35,6 +35,31 @@ __doc__ = (__doc__ or '').strip()
 
 prog = argparse.ArgumentParser().prog
 
+__version__ = '0'  # not released yet
+
+class VersionAction(argparse.Action):
+    '''
+    argparse --version action
+    '''
+
+    def __init__(self, option_strings, dest=argparse.SUPPRESS):
+        super().__init__(
+            option_strings=option_strings,
+            dest=dest,
+            nargs=0,
+            help='show version information and exit'
+        )
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        print(f'{parser.prog} {__version__}')
+        print('+ Python {0}.{1}.{2}'.format(*sys.version_info))
+        print(f'  + Unicode {unicodedata.unidata_version}')
+        if icu:
+            print(f'+ PyICU {icu.VERSION}')
+            print(f'  + Unicode {icu.UNICODE_VERSION}')
+            print(f'  + ICU {icu.ICU_VERSION}')
+        parser.exit()
+
 def warning(msg):
     print(f'{prog}: {msg}', file=sys.stderr)
 
@@ -444,6 +469,7 @@ def main():
     if sys.version_info < (3, 10):
         # https://bugs.python.org/issue9694
         ap._optionals.title = 'options'  # pylint: disable=protected-access
+    ap.add_argument('--version', action=VersionAction)
     ap.add_argument('-s', '--string', action='store_true', help='show info about characters in the string')
     ap.add_argument('-p', '--print', action='store_true', help='print only characters')
     ap.add_argument('name', metavar='NAME')
