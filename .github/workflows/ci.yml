@@ -10,6 +10,7 @@ jobs:
         include:
         - python-version: '3.6'
           os: ubuntu-20.04
+          pyicu: pyicu==2.4.3
         - python-version: '3.7'
           os: ubuntu-20.04
         - python-version: '3.8'
@@ -56,7 +57,7 @@ jobs:
         python3 -m pip install wheel
     - name: pip install PyICU
       run: |
-        python3 -m pip install --verbose pyicu
+        python3 -m pip install --verbose ${{matrix.pyicu || 'pyicu'}}
     - name: print version info
       run: |
         ./ult --version
