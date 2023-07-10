@@ -57,6 +57,9 @@ jobs:
     - name: pip install PyICU
       run: |
         python3 -m pip install --verbose pyicu
+    - name: print version info
+      run: |
+        ./ult --version
     - name: run tests
       run: |
         make test
