@@ -17,13 +17,17 @@ import fractions
 import functools
 import gzip
 import html.entities
+import itertools
 import re
 import signal
 import sys
 import typing
 import unicodedata
 
-import icu
+try:
+    import icu
+except ImportError:
+    icu = None
 
 int(0_0)  # Python >= 3.6 is required
 
@@ -263,7 +267,26 @@ class PropertyValue(typing.NamedTuple):
     def __str__(self):
         return f'{self.short} ({self.long})'
 
+def vcmp(v1, v2):
+    '''
+    cmp()-style version comparison
+    '''
+    v1 = v1.split('.')
+    v2 = v2.split('.')
+    for c1, c2 in itertools.zip_longest(v1, v2, fillvalue=0):
+        c1 = int(c1)
+        c2 = int(c2)
+        if c1 > c2:
+            return 1
+        if c1 < c2:
+            return -1
+    return 0
+
 def get_script(ch):
+    if icu is None:
+        return None
+    if vcmp(icu.VERSION, '2.4.3') < 0:
+        return None
     i = icu.Char.getIntPropertyValue(ch, icu.UProperty.SCRIPT)
     names = (
         icu.Char.getPropertyValueName(icu.UProperty.SCRIPT, i, choice)
@@ -304,6 +327,8 @@ _age_to_date = {
 }
 
 def get_age(ch):
+    if icu is None:
+        return None
     # TODO: cover Unicode 1.0 too
     age = icu.Char.charAge(ch)
     if age == '0.0':
@@ -520,7 +545,7 @@ def show_char(ch):
     if block:
         print(f'Block: U+{block.start:04X}..U+{block.stop:04X} {block.name}')
     script = get_script(ch)
-    if script.short != 'Zzzz':
+    if script and script.short != 'Zzzz':
         print(f'Script: {script}')
     nv = get_numeric_value(ch)
     if nv is not None:
