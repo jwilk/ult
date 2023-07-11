@@ -64,6 +64,9 @@ class VersionAction(argparse.Action):
             print(f'  + ICU {icu.ICU_VERSION}')
         print('+ LibUniNamesList')
         print(f'  + Unicode {get_unl_version()}')
+        aliases_version = get_aliases_version()
+        aliases_version = trim_version(aliases_version)
+        print(f'+ UCD NameAliases {aliases_version}')
         parser.exit()
 
 def warning(msg):
@@ -184,10 +187,12 @@ class Alias(typing.NamedTuple):
     name: str
     label: str
 
+_alias_path = '/usr/share/unicode/NameAliases.txt'
+
 @cache
 def _get_alias_data():
     data = collections.defaultdict(list)
-    path = '/usr/share/unicode/NameAliases.txt'
+    path = _alias_path
     with open(path, 'rt', encoding='UTF-8') as file:
         for line in file:
             line = line.rstrip('\n')
@@ -200,6 +205,16 @@ def _get_alias_data():
 
 def get_aliases(ch):
     return _get_alias_data().get(ch)
+
+def get_aliases_version():
+    path = _alias_path
+    match = None
+    with open(path, 'rt', encoding='UTF-8') as file:
+        for line in file:
+            match = re.match('^# NameAliases-([0-9.]+)[.]txt$', line)
+            break
+    if match:
+        return match.group(1)
 
 _libunl = ctypes.CDLL('libuninameslist.so.1')
 
