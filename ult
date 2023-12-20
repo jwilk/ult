@@ -2225,6 +2225,7 @@ class C():
         c = ast.literal_eval(f'"\\{e}"')
         unescape[f'\\{e}'] = c
         escape[c] = f'\\{e}'
+    e = None  # hi, Pylint!
     del e, c
 
 def filter_char_names(flt):
