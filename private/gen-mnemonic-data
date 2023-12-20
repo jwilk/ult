@@ -48,6 +48,8 @@ def main():
             return fr"'\u{i:04X}'"
         return ascii(c)
     for k, v in sorted(data.items()):
+        if k == v:
+            continue
         print('   ', f'{r(k)}: {v!r},')
     print('}.get')
 
