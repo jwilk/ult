@@ -1957,6 +1957,7 @@ def get_aliases_version():
             break
     if match:
         return match.group(1)
+    return None
 
 _libunl = ctypes.CDLL('libuninameslist.so.1')
 
