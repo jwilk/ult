@@ -50,6 +50,9 @@ def main():
     for k, v in sorted(data.items()):
         if k == v:
             continue
+        if 0xE000 < ord(k) <= 0xEFFF:
+            # private-use characters
+            continue
         print('   ', f'{r(k)}: {v!r},')
     print('}.get')
 
