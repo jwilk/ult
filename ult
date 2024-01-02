@@ -1930,6 +1930,7 @@ class Alias(typing.NamedTuple):
     label: str
 
 _alias_path = '/usr/share/unicode/NameAliases.txt'
+# TODO: make it optional?
 
 @cache
 def _get_alias_data():
@@ -1960,6 +1961,7 @@ def get_aliases_version():
     return None
 
 _libunl = ctypes.CDLL('libuninameslist.so.1')
+# TODO: make it optional?
 
 # const char *uniNamesList_NamesListVersion(void);
 _libunl_version =_libunl.uniNamesList_NamesListVersion
