@@ -9,7 +9,6 @@ import re
 import shlex
 import subprocess
 import textwrap
-import unittest
 
 from .tools import (
     TestCase,
@@ -77,8 +76,5 @@ def _read_files():
     if not ok:
         raise RuntimeError('no README examples found')
 _read_files()
-
-if __name__ == '__main__':
-    unittest.main()
 
 # vim:ts=4 sts=4 sw=4 et
