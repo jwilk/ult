@@ -6,7 +6,7 @@ all: ;
 
 .PHONY: test
 test:
-	python3 tests/test_cli.py -v
+	python3 -m unittest -v tests/test_*.py
 
 .PHONY: clean
 clean:
