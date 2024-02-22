@@ -2199,6 +2199,19 @@ def format_name(ch):
             name = f'<{label_prefix}-{pt:04X}>'
     return f'U+{pt:04X}{name and " "}{name or ""}'
 
+def is_double_combining(ch):
+    if not icu:
+        return False
+    if vcmp(icu.VERSION, '2.4.3') < 0:
+        return None
+    i = icu.Char.getIntPropertyValue(ch, icu.UProperty.CANONICAL_COMBINING_CLASS)
+    comb_class = icu.Char.getPropertyValueName(
+        icu.UProperty.CANONICAL_COMBINING_CLASS,
+        i,
+        icu.UPropertyNameChoice.SHORT_PROPERTY_NAME
+    )
+    return comb_class in {'DA', 'DB'}
+
 def format_glyph(ch):
     cat = unicodedata.category(ch)
     if cat[0] == 'C':
@@ -2213,7 +2226,11 @@ def format_glyph(ch):
         if '\U000E0100' <= ch <= '\U000E01EF':
             # VARIATION SELECTOR-{17,…,256}
             return None
-        return '\N{DOTTED CIRCLE}' + ch
+        o = '\N{DOTTED CIRCLE}'
+        if is_double_combining(ch):
+            return f'{o}{ch}{o}'
+        else:
+            return f'{o}{ch}'
     if cat == 'Zs':
         return f'[{ch}]'
     if cat in {'Zl', 'Zp'}:
