@@ -1,4 +1,4 @@
-# Copyright © 2021 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2021-2024 Jakub Wilk <jwilk@jwilk.net>
 # SPDX-License-Identifier: MIT
 
 .PHONY: all

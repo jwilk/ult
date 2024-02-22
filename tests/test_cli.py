@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2021-2023 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2021-2024 Jakub Wilk <jwilk@jwilk.net>
 # SPDX-License-Identifier: MIT
 
 import glob
