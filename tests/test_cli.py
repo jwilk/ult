@@ -12,12 +12,17 @@ import subprocess
 import textwrap
 import unittest
 
+from .tools import (
+    TestCase,
+    assert_equal,
+)
+
 int(0_0)  # Python >= 3.6 is required
 
 here = os.path.dirname(__file__)
 base = f'{here}/..'
 
-class Tests(unittest.TestCase):
+class Tests(TestCase):
 
     maxDiff = None
 
@@ -39,10 +44,10 @@ class Tests(unittest.TestCase):
             check=False,
         )
         err = cp.stderr.decode('UTF-8', 'replace')
-        self.assertEqual(err, '')
-        self.assertEqual(cp.returncode, 0)
+        assert_equal(err, '')
+        assert_equal(cp.returncode, 0)
         out = cp.stdout.decode('UTF-8')
-        self.assertEqual(xout, out)
+        assert_equal(xout, out)
 
 def _read_files():
     ok = False
