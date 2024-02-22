@@ -2217,8 +2217,8 @@ def format_glyph(ch):
     if cat[0] == 'C':
         return None
     if cat in {'Me', 'Mn'}:
-        if ch in '\u180B\u180C\u180D':
-            # MONGOLIAN FREE VARIATION SELECTOR {ONE,TWO,THREE}
+        if ch in '\u180B\u180C\u180D\u180F':
+            # MONGOLIAN FREE VARIATION SELECTOR {ONE,TWO,THREE,FOUR}
             return None
         if '\uFE00' <= ch <= '\uFE0F':
             # VARIATION SELECTOR-{1,…,16}
