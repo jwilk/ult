@@ -2202,7 +2202,7 @@ def format_glyph(ch):
     cat = unicodedata.category(ch)
     if cat[0] == 'C':
         return None
-    if cat[0] == 'M':
+    if cat in {'Me', 'Mn'}:
         if ch in '\u180B\u180C\u180D':
             # MONGOLIAN FREE VARIATION SELECTOR {ONE,TWO,THREE}
             return None
