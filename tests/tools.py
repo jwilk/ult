@@ -17,6 +17,7 @@ def testcase(f):
 tc = unittest.TestCase('__hash__')
 
 assert_equal = tc.assertEqual
+assert_is_none = tc.assertIsNone
 
 del tc
 
@@ -31,6 +32,7 @@ __all__ = [
     'TestCase',
     # nose-compatible:
     'assert_equal',
+    'assert_is_none',
 ]
 
 # vim:ts=4 sts=4 sw=4 et
