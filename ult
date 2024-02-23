@@ -2145,6 +2145,7 @@ def get_age(ch):
 def _get_prop_alias_data():
     data = collections.defaultdict(dict)
     path = '/usr/share/unicode/PropertyValueAliases.txt'
+    # TODO: make it optional?
     with open(path, 'rt', encoding='UTF-8') as file:
         for line in file:
             line = line.partition('#')[0]
