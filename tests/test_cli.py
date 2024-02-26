@@ -30,17 +30,20 @@ class Tests(TestCase):
             return self._test(name, cmd, xout)
         setattr(cls, f'test:{name}', t)
 
-    def _test(self, name, cmd, xout):
+    def _run(self, cmd):
         vcmd = shlex.split(cmd)
         if vcmd[0] != 'ult':
             raise RuntimeError
         vcmd[0] = f'{base}/ult'
-        cp = subprocess.run(vcmd,
+        return subprocess.run(vcmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             timeout=10,
             check=False,
         )
+
+    def _test(self, name, cmd, xout):
+        cp = self._run(cmd)
         err = cp.stderr.decode('UTF-8', 'replace')
         assert_equal(err, '')
         assert_equal(cp.returncode, 0)
