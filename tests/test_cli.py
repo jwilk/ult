@@ -50,6 +50,15 @@ class Tests(TestCase):
         out = cp.stdout.decode('UTF-8')
         assert_equal(xout, out)
 
+    def test_version(self):
+        cp = self._run('ult --version')
+        err = cp.stderr.decode('UTF-8', 'replace')
+        assert_equal(err, '')
+        assert_equal(cp.returncode, 0)
+        out = cp.stdout.decode('UTF-8')
+        out = out.splitlines()
+        assert_equal('ult 0', out[0])
+
 def _read_files():
     ok = False
     for path in glob.iglob(f'{here}/*.cli'):
