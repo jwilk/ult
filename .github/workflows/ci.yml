@@ -64,5 +64,9 @@ jobs:
     - name: run tests
       run: |
         make test
+    - name: update generated code
+      run: |
+        private/update-gen-code
+        git diff --exit-code
 
 # vim:ts=2 sts=2 sw=2 et
