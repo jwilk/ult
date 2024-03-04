@@ -68,5 +68,12 @@ jobs:
       run: |
         private/update-gen-code
         git diff --exit-code
+    - name: install
+      run: |
+        make install PREFIX=~/.local
+    - name: post-install smoke-test
+      run: |
+        cd /
+        ult --version
 
 # vim:ts=2 sts=2 sw=2 et
