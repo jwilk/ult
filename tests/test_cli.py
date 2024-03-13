@@ -27,7 +27,7 @@ class Tests(TestCase):
     @classmethod
     def add(cls, name, cmd, xout):
         def t(self):
-            return self._test(name, cmd, xout)
+            return self._test(cmd, xout)
         setattr(cls, f'test:{name}', t)
 
     def _run(self, cmd):
@@ -42,7 +42,7 @@ class Tests(TestCase):
             check=False,
         )
 
-    def _test(self, name, cmd, xout):
+    def _test(self, cmd, xout):
         cp = self._run(cmd)
         err = cp.stderr.decode('UTF-8', 'replace')
         assert_equal(err, '')
