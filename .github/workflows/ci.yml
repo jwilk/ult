@@ -21,6 +21,9 @@ jobs:
           os: ubuntu-22.04
         - python-version: '3.11'
           os: ubuntu-22.04
+        - python-version: '3.11'
+          os: ubuntu-22.04
+          unicodedata2: unicodedata2
         - python-version: '3.12'
           os: ubuntu-22.04
     steps:
@@ -28,7 +31,10 @@ jobs:
     - uses: actions/cache@v4
       with:
         path: ~/.cache/pip
-        key: pip-${{matrix.os}}-python${{matrix.python-version}}
+        key:
+          pip-${{matrix.os}}-python${{matrix.python-version}}-${{matrix.unicodedata2}}
+        restore-keys:
+          pip-${{matrix.os}}-python${{matrix.python-version}}-
     - name: set up Python ${{matrix.python-version}}
       uses: actions/setup-python@v5
       with:
@@ -43,6 +49,10 @@ jobs:
     - name: pip install wheel
       run: |
         python3 -m pip install wheel
+    - name: pip install unicodedata2
+      if: ${{matrix.unicodedata2}}
+      run: |
+        python3 -m pip install --verbose ${{matrix.unicodedata2}}
     - name: pip install PyICU
       run: |
         python3 -m pip install --verbose ${{matrix.pyicu || 'pyicu'}}
