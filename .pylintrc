@@ -10,8 +10,8 @@ disable =
     invalid-name,
     missing-class-docstring,
     missing-function-docstring,
-    use-dict-literal,
     too-few-public-methods,
+    use-dict-literal,
 
 [REPORTS]
 reports = no
