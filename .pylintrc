@@ -12,6 +12,7 @@ disable =
     missing-class-docstring,
     missing-function-docstring,
     missing-module-docstring,
+    no-else-return,
     too-few-public-methods,
     too-many-branches,
     too-many-lines,
