@@ -27,7 +27,7 @@ class Tests(TestCase):
     @classmethod
     def add(cls, name, cmd, xout):
         def t(self):
-            return self._test(cmd, xout)
+            return self._test(cmd, xout)  # pylint: disable=protected-access
         setattr(cls, f'test:{name}', t)
 
     def _run(self, cmd):
