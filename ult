@@ -21,7 +21,7 @@ import re
 import signal
 import sys
 import typing
-import unicodedata
+import unicodedata as udata
 
 try:
     import icu
@@ -55,7 +55,7 @@ class VersionAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         print(f'{parser.prog} {__version__}')
         print('+ Python {0}.{1}.{2}'.format(*sys.version_info))
-        unidata_ver = trim_version(unicodedata.unidata_version)
+        unidata_ver = trim_version(udata.unidata_version)
         print(f'  + Unicode {unidata_ver}')
         if icu:
             print(f'+ PyICU {icu.VERSION}')
@@ -2175,15 +2175,15 @@ def float2frac(x):
 
 def get_numeric_value(ch):
     try:
-        nv = unicodedata.numeric(ch)
+        nv = udata.numeric(ch)
     except ValueError:
         return None
     return float2frac(nv)
 
 def format_name(ch):
     pt = ord(ch)
-    name = unicodedata.name(ch, '')
-    cat = unicodedata.category(ch)
+    name = udata.name(ch, '')
+    cat = udata.category(ch)
     if not name:
         # code point label
         # (see The Unicode Standard version 13.0, §4.8)
@@ -2214,7 +2214,7 @@ def is_double_combining(ch):
     return comb_class in {'DA', 'DB'}
 
 def format_glyph(ch):
-    cat = unicodedata.category(ch)
+    cat = udata.category(ch)
     if cat[0] == 'C':
         return None
     if cat in {'Me', 'Mn'}:
@@ -2252,7 +2252,7 @@ class C():
 def filter_char_names(flt):
     for pt in range(0xF0000):
         ch = chr(pt)
-        name = unicodedata.name(ch, None)
+        name = udata.name(ch, None)
         if not name:
             continue
         if flt(name):
@@ -2316,7 +2316,7 @@ def main():
         s = filter_char_names(regexp.match)
     else:
         try:
-            s = unicodedata.lookup(name)
+            s = udata.lookup(name)
         except KeyError as exc:
             error(exc.args[0])
         if len(s) > 1:
@@ -2367,7 +2367,7 @@ def show_char(ch):
             'HTML5:',
             *(f'&{e}' for e in sorted(ents))
         )
-    cat = unicodedata.category(ch)
+    cat = udata.category(ch)
     long_cat = get_category_alias(cat)
     print(f'Category: {cat} ({long_cat})')
     block = get_block(ch)
