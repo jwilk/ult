@@ -13,6 +13,7 @@ disable =
     missing-function-docstring,
     missing-module-docstring,
     no-else-return,
+    no-self-use,
     too-few-public-methods,
     too-many-branches,
     too-many-lines,
