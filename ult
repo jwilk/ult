@@ -21,7 +21,11 @@ import re
 import signal
 import sys
 import typing
-import unicodedata as udata
+
+try:
+    import unicodedata2 as udata
+except ImportError:
+    import unicodedata as udata
 
 try:
     import icu
@@ -56,6 +60,8 @@ class VersionAction(argparse.Action):
         print(f'{parser.prog} {__version__}')
         print('+ Python {0}.{1}.{2}'.format(*sys.version_info))
         unidata_ver = trim_version(udata.unidata_version)
+        if udata.__name__ == 'unicodedata2':
+            print('+ unicodedata2')
         print(f'  + Unicode {unidata_ver}')
         if icu:
             print(f'+ PyICU {icu.VERSION}')
