@@ -2244,7 +2244,7 @@ def format_glyph(ch):
         return None
     return ch
 
-class C():
+class C:
 
     escape = {}
     unescape = {}
