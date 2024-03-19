@@ -34,7 +34,7 @@ def test_variation_selector():
     for n in range(1, 4):
         # TODO: bump to 5 when Python < 3.11 in no longer supported
         ch = unicodedata.lookup(f'FVS{n}')
-    t('\u180F') # FSV4 (see above)
+    t('\u180F')  # FSV4 (see above)
     for n in range(1, 257):
         ch = unicodedata.lookup(f'VARIATION SELECTOR-{n}')
         t(ch)

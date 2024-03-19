@@ -1970,7 +1970,7 @@ _libunl = ctypes.CDLL('libuninameslist.so.1')
 # TODO: make it optional?
 
 # const char *uniNamesList_NamesListVersion(void);
-_libunl_version =_libunl.uniNamesList_NamesListVersion
+_libunl_version = _libunl.uniNamesList_NamesListVersion
 _libunl_version.argtypes = []
 _libunl_version.restype = ctypes.c_char_p
 
