@@ -2192,8 +2192,9 @@ def format_name(ch):
     name = udata.name(ch, '')
     cat = udata.category(ch)
     if not name:
-        # code point label
-        # (see The Unicode Standard version 13.0, §4.8)
+        # use code point label as fallback
+        # https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-4/#G135248
+        # (§4.8.2 Code Point Labels)
         label_prefix = dict(
             Cc='control',
             Cn='reserved',
