@@ -11,6 +11,8 @@ generate mnemonic data from RFC 1345
 import gzip
 import re
 
+0_0  # Python >= 3.6 is required
+
 def main():
     seen = set()
     data = {}
