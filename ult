@@ -2292,7 +2292,10 @@ def main():
         show(name)
         return
     if options.regexp:
-        regexp = re.compile(name, flags=re.IGNORECASE)
+        try:
+            regexp = re.compile(name, flags=re.IGNORECASE)
+        except re.error as exc:
+            error(f'regexp syntax error: {exc}')
         s = filter_char_names(regexp.search)
         show(s)
         return
