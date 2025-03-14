@@ -2183,6 +2183,7 @@ def float2frac(x):
     raise ValueError
 
 def get_numeric_value(ch):
+    # Eww, FIXME in Python?
     try:
         nv = udata.numeric(ch)
     except ValueError:
