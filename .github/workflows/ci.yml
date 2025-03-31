@@ -54,6 +54,7 @@ jobs:
         python3 -m pip install --verbose ${{matrix.unicodedata2}}
     - name: pip install PyICU
       run: |
+        export PYICU_CFLAGS='-O2'
         python3 -m pip install --verbose ${{matrix.pyicu || 'pyicu'}}
     - name: print version info
       run: |
