@@ -47,6 +47,9 @@ jobs:
     - name: apt install deps
       run: |
         sudo apt-get install doc-rfc-informational libuninameslist1 unicode-data
+    - name: apt install PyICU build-deps
+      run: |
+        sudo apt-get install libicu-dev pkg-config
     - name: pip install wheel
       run: |
         python3 -m pip install wheel
